@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Legend Power | Pro IPS Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- External CSS Link (Ami eta add kore dilam) -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        :root {
+            --bg: #08090a;
+            --card-bg: rgba(17, 18, 20, 0.8);
+            --accent: #007AFF; 
+            --gold: #FFD700;
+            --text-main: #FFFFFF;
+            --text-dim: #88888b;
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+
+        * { 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            -webkit-tap-highlight-color: transparent; 
+        }
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text-main); 
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- SMART CURSOR GLOW --- */
+        .cursor-glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle 350px at var(--x, 50%) var(--y, 50%), rgba(0, 122, 255, 0.12), transparent);
+            z-index: -1; pointer-events: none;
+        }
+
+        /* --- ENHANCED TOUCH/HOVER EFFECT --- */
+        .spec-card, .bento-card, .hero-v2 h1, .hero-v2 p, .trust-item, .navbar div, footer p {
+            transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
+            cursor: pointer;
+            border: 1px solid transparent;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+        .spec-card:hover, .bento-card:hover, .trust-item:hover, .navbar div:hover,
+        .spec-card.touch-active, .bento-card.touch-active, .trust-item.touch-active, .navbar div.touch-active {
+            font-weight: 800 !important;
+            border-color: var(--accent);
+            box-shadow: 0 10px 30px rgba(0, 122, 255, 0.3);
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .hero-v2 h1:hover, .hero-v2 h1.touch-active {
+            color: var(--gold);
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.4);
+            transform: scale(1.05);
+            font-weight: 800;
+        }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background: #000; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; z-index: 9999;
+            transition: opacity 0.8s ease-in-out, visibility 0.8s;
+            text-align: center;
+        }
+
+        .loader-logo {
+            font-size: clamp(1.5rem, 8vw, 3rem);
+            font-weight: 800; color: var(--gold);
+            letter-spacing: 8px; text-transform: uppercase;
+            animation: textReveal 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        @keyframes textReveal {
+            0% { transform: translateY(20px); opacity: 0; filter: blur(10px); }
+            100% { transform: translateY(0); opacity: 1; filter: blur(0); }
+        }
+
+        /* --- ENTRANCE ANIMATIONS --- */
+        .reveal { opacity: 0; transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .from-bottom { transform: translateY(50px); }
+        .from-left { transform: translateX(-50px); }
+        .from-right { transform: translateX(50px); }
+        .active { opacity: 1; transform: translate(0, 0); }
+
+        /* --- MAIN UI --- */
+        .glow {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -20%, #1a2a44 0%, transparent 50%);
+            z-index: -1; pointer-events: none;
+        }
+
+        .navbar { padding: 25px; display: flex; justify-content: space-between; max-width: 1200px; margin: 0 auto; position: sticky; top: 0; z-index: 100; backdrop-filter: blur(15px); border-bottom: 1px solid var(--glass-border); }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        .hero-v2 { text-align: center; padding: 80px 0; }
+        .hero-v2 h1 { font-size: clamp(2.2rem, 10vw, 3.8rem); font-weight: 800; margin-bottom: 20px; transition: 0.5s; }
+        
+        .banner-wrapper {
+            border-radius: 40px; overflow: hidden; border: 1px solid var(--glass-border);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.6); margin-top: 40px;
+            transition: 0.5s;
+        }
+        .banner-wrapper:hover, .banner-wrapper.touch-active { border-color: var(--accent); transform: scale(1.01); }
+        .main-banner { width: 100%; display: block; }
+
+        .trust-strip {
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 40px;
+            margin: 80px 0; padding: 40px; background: rgba(255,255,255,0.02);
+            border-radius: 30px; border: 1px solid var(--glass-border);
+        }
+
+        .specs-section { margin-top: 100px; }
+        .specs-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; margin-top: 40px;
+        }
+        .spec-card {
+            background: var(--card-bg); border-radius: 24px; padding: 35px;
+            border: 1px solid var(--glass-border);
+        }
+        .spec-card h3 { color: var(--gold); margin-bottom: 12px; font-size: 1.4rem; }
+        .spec-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
+
+        .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 25px; margin-top: 60px; }
+        .bento-card { grid-column: span 6; background: var(--card-bg); border-radius: 32px; padding: 40px; border: 1px solid var(--glass-border); }
+        .image-container { width: 100%; height: 280px; background: #000; border-radius: 20px; margin-bottom: 25px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .image-container img { width: 90%; height: 90%; object-fit: contain; transition: 0.5s; }
+        .bento-card:hover .image-container img, .bento-card.touch-active .image-container img { transform: scale(1.1); }
+
+        .actions { display: flex; gap: 12px; margin-top: 20px; }
+        .btn-main { flex: 1; padding: 18px; border-radius: 18px; font-weight: 700; text-decoration: none; text-align: center; transition: 0.3s; }
+        .btn-buy { background: #fff; color: #000; }
+        .btn-buy:active { transform: scale(0.95); }
+        .btn-wa { background: rgba(37, 211, 102, 0.1); color: #25D366; border: 1px solid rgba(37, 211, 102, 0.2); }
+
+        footer { padding: 80px 0; text-align: center; border-top: 1px solid var(--glass-border); color: var(--text-dim); margin-top: 100px; }
+
+        @media (max-width: 768px) { .bento-card { grid-column: span 12; } }
+    </style>
+</head>
+<body>
+
+    <div class="cursor-glow" id="mouseGlow"></div>
+
+    <div id="preloader">
+        <div class="loader-logo">THE LEGEND POWER</div>
+    </div>
+
+    <div class="content-wrap">
+        <div class="glow"></div>
+
+        <nav class="navbar reveal from-bottom interactable">
+            <div style="font-weight: 800; color: var(--gold); letter-spacing: 2px;">THE LEGEND POWER</div>
+            <div style="font-size: 11px; color: var(--text-dim); font-weight: 700; letter-spacing: 1px;">FENI | BANGLADESH</div>
+        </nav>
+
+        <div class="container">
+            <section class="hero-v2">
+                <h1 class="reveal from-left interactable">Premium Power <br> For Your Home</h1>
+                <p class="reveal from-right interactable" style="color: var(--text-dim); margin-bottom: 40px; max-width: 700px; margin: 0 auto; line-height: 1.6;">Experience the next generation of IPS technology. Engineered for safety, silence, and extreme durability.</p>
+                
+                <div class="banner-wrapper reveal from-bottom interactable">
+                    <img src="images/IMG_7508.png" class="main-banner" alt="Banner">
+                </div>
+            </section>
+
+            <div class="trust-strip reveal from-bottom">
+                <div class="trust-item interactable"><span>✅</span><p>2 YEAR WARRANTY</p></div>
+                <div class="trust-item interactable"><span>🛠️</span><p>HOME SERVICE</p></div>
+                <div class="trust-item interactable"><span>⚡</span><p>ECO SAVER</p></div>
+                <div class="trust-item interactable"><span>🔥</span><p>100% COPPER</p></div>
+            </div>
+
+            <section class="specs-section">
+                <h2 class="reveal from-left interactable" style="text-align: center; margin-bottom: 50px; font-weight: 800; font-size: 2rem;">Technical Excellence</h2>
+                <div class="specs-grid">
+                    <div class="spec-card reveal from-bottom interactable">
+                        <h3>100% Pure Copper</h3>
+                        <p>Our heavy-duty transformers ensure 2x faster charging and long-term reliability for your home.</p>
+                    </div>
+                    <div class="spec-card reveal from-bottom interactable" style="transition-delay: 0.1s;">
+                        <h3>Pure DSP Sine Wave</h3>
+                        <p>Eliminates humming noise from fans and protects sensitive electronics like LED TVs and PCs.</p>
+                    </div>
+                    <div class="spec-card reveal from-bottom interactable" style="transition-delay: 0.2s;">
+                        <h3>Smart Shield</h3>
+                        <p>Built-in protection against overloads, short circuits, and dangerous thunderstorms.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="product-section">
+                <div class="bento-grid">
+                    <div class="bento-card reveal from-left interactable">
+                        <div class="image-container"><img src="images/ad056b66-b2bd-405b-9bb6-c4e814b52f66.jpeg" alt="1000VA"></div>
+                        <h2 style="margin-bottom: 10px; font-weight: 800;">1000VA Legend DSP</h2>
+                        <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">Perfect for 3-4 Fans and 5-8 LED Lights.</p>
+                        <div class="actions">
+                            <a href="tel:+8801619288205" class="btn-main btn-buy">Order Now</a>
+                            <a href="https://wa.me/8801619288205" class="btn-main btn-wa">WhatsApp</a>
+                        </div>
+                    </div>
+                    <div class="bento-card reveal from-right interactable">
+                        <div class="image-container"><img src="images/d36dee41-e88a-478e-812d-9b5bac10032a.jpeg" alt="2000VA"></div>
+                        <h2 style="margin-bottom: 10px; font-weight: 800;">2000VA Heavy Duty</h2>
+                        <p style="color: var(--text-dim); margin-bottom: 20px; font-size: 0.9rem;">Best for Offices, Clinics, or Luxury Homes.</p>
+                        <div class="actions">
+                            <a href="tel:+8801619288205" class="btn-main btn-buy">Order Now</a>
+                            <a href="https://wa.me/8801619288205" class="btn-main btn-wa">WhatsApp</a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Bijoy Singh Dighi Rd, Feni, Bangladesh</p>
+            <p class="interactable" style="font-size: 11px; margin-top: 25px; letter-spacing: 3px; font-weight: 800; color: #fff;">DESIGNED BY SHAMIUL HASAN | © 2026</p>
+        </footer>
+    </div>
+
+    <script>
+        const mouseGlow = document.getElementById('mouseGlow');
+        window.addEventListener('mousemove', (e) => {
+            mouseGlow.style.setProperty('--x', e.clientX + 'px');
+            mouseGlow.style.setProperty('--y', e.clientY + 'px');
+        });
+
+        window.addEventListener('touchmove', (e) => {
+            mouseGlow.style.setProperty('--x', e.touches[0].clientX + 'px');
+            mouseGlow.style.setProperty('--y', e.touches[0].clientY + 'px');
+        });
+
+        const interactiveElements = document.querySelectorAll('.interactable, .spec-card, .bento-card, .trust-item, .navbar div, .hero-v2 h1, .banner-wrapper');
+        
+        interactiveElements.forEach(el => {
+            el.addEventListener('touchstart', () => {
+                el.classList.add('touch-active');
+            }, {passive: true});
+
+            el.addEventListener('touchend', () => {
+                setTimeout(() => {
+                    el.classList.remove('touch-active');
+                }, 200); 
+            });
+
+            el.addEventListener('touchcancel', () => {
+                el.classList.remove('touch-active');
+            });
+        });
+
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('preloader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('preloader').style.visibility = 'hidden';
+                }, 800);
+                
+                const reveals = document.querySelectorAll('.reveal');
+                reveals.forEach((el, index) => {
+                    setTimeout(() => {
+                        el.classList.add('active');
+                    }, 300 + (index * 100));
+                });
+            }, 2000);
+        });
+
+        window.addEventListener('scroll', () => {
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const revealTop = el.getBoundingClientRect().top;
+                if (revealTop < windowHeight - 50) {
+                    el.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
