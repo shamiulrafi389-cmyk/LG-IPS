@@ -233,63 +233,78 @@
             <p class="interactable" style="font-size: 11px; margin-top: 25px; letter-spacing: 3px; font-weight: 800; color: #fff;">DESIGNED BY SHAMIUL HASAN | © 2026</p>
         </footer>
     </div>
-
-    <script>
-        const mouseGlow = document.getElementById('mouseGlow');
-        window.addEventListener('mousemove', (e) => {
-            mouseGlow.style.setProperty('--x', e.clientX + 'px');
-            mouseGlow.style.setProperty('--y', e.clientY + 'px');
+<script>
+    // 1. Bento Card Spotlight Effect (Advanced CSS Variable Tracker)
+    document.querySelectorAll('.bento-card').forEach(card => {
+        card.addEventListener('mousemove', e => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
         });
+    });
 
-        window.addEventListener('touchmove', (e) => {
-            mouseGlow.style.setProperty('--x', e.touches[0].clientX + 'px');
-            mouseGlow.style.setProperty('--y', e.touches[0].clientY + 'px');
-        });
+    // 2. Global Mouse Glow (Background Tracker)
+    const mouseGlow = document.getElementById('mouseGlow');
+    window.addEventListener('mousemove', (e) => {
+        mouseGlow.style.setProperty('--x', e.clientX + 'px');
+        mouseGlow.style.setProperty('--y', e.clientY + 'px');
+    });
 
-        const interactiveElements = document.querySelectorAll('.interactable, .spec-card, .bento-card, .trust-item, .navbar div, .hero-v2 h1, .banner-wrapper');
-        
-        interactiveElements.forEach(el => {
-            el.addEventListener('touchstart', () => {
-                el.classList.add('touch-active');
-            }, {passive: true});
+    window.addEventListener('touchmove', (e) => {
+        mouseGlow.style.setProperty('--x', e.touches[0].clientX + 'px');
+        mouseGlow.style.setProperty('--y', e.touches[0].clientY + 'px');
+    });
 
-            el.addEventListener('touchend', () => {
-                setTimeout(() => {
-                    el.classList.remove('touch-active');
-                }, 200); 
-            });
+    // 3. Touch Feedback for Mobile Devices
+    const interactiveElements = document.querySelectorAll('.interactable, .spec-card, .bento-card, .trust-item, .navbar div, .hero-v2 h1, .banner-wrapper');
+    
+    interactiveElements.forEach(el => {
+        el.addEventListener('touchstart', () => {
+            el.classList.add('touch-active');
+        }, {passive: true});
 
-            el.addEventListener('touchcancel', () => {
-                el.classList.remove('touch-active');
-            });
-        });
-
-        window.addEventListener('load', () => {
+        el.addEventListener('touchend', () => {
             setTimeout(() => {
-                document.getElementById('preloader').style.opacity = '0';
-                setTimeout(() => {
-                    document.getElementById('preloader').style.visibility = 'hidden';
-                }, 800);
-                
-                const reveals = document.querySelectorAll('.reveal');
-                reveals.forEach((el, index) => {
-                    setTimeout(() => {
-                        el.classList.add('active');
-                    }, 300 + (index * 100));
-                });
-            }, 2000);
+                el.classList.remove('touch-active');
+            }, 200); 
         });
 
-        window.addEventListener('scroll', () => {
-            const reveals = document.querySelectorAll('.reveal');
-            reveals.forEach(el => {
-                const windowHeight = window.innerHeight;
-                const revealTop = el.getBoundingClientRect().top;
-                if (revealTop < windowHeight - 50) {
-                    el.classList.add('active');
-                }
-            });
+        el.addEventListener('touchcancel', () => {
+            el.classList.remove('touch-active');
         });
-    </script>
+    });
+
+    // 4. Preloader & Scroll Animation Logic
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            document.getElementById('preloader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('preloader').style.visibility = 'hidden';
+            }, 800);
+            
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach((el, index) => {
+                setTimeout(() => {
+                    el.classList.add('active');
+                }, 300 + (index * 100));
+            });
+        }, 2000);
+    });
+
+    window.addEventListener('scroll', () => {
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            const windowHeight = window.innerHeight;
+            const revealTop = el.getBoundingClientRect().top;
+            if (revealTop < windowHeight - 50) {
+                el.classList.add('active');
+            }
+        });
+    });
+</script>
+
+    
 </body>
 </html>
