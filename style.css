@@ -1,103 +1,143 @@
 /* 
-   Project: The Legend Power - Pro IPS Solutions
-   Author: Shamiul Hasan
-   Date: 2026
+   THE LEGEND POWER - ADVANCED UI/UX CORE
+   Designed for: Shamiul Hasan
+   Theme: Midnight Ultra-Modern
 */
 
 :root {
-    --bg: #08090a;
-    --card-bg: rgba(17, 18, 20, 0.8);
-    --accent: #007AFF; 
+    /* Color Palette */
+    --bg-deep: #050608;
+    --bg-card: rgba(15, 17, 21, 0.75);
+    --accent-blue: #007AFF;
+    --accent-glow: rgba(0, 122, 255, 0.4);
     --gold: #FFD700;
-    --text-main: #FFFFFF;
-    --text-dim: #88888b;
-    --glass-border: rgba(255, 255, 255, 0.08);
+    --text-primary: #F5F5F7;
+    --text-secondary: #86868B;
+    
+    /* Layout */
+    --border-glass: rgba(255, 255, 255, 0.06);
+    --radius-lg: 28px;
+    --radius-md: 18px;
+    
+    /* Motion */
+    --spring: cubic-bezier(0.4, 0, 0.2, 1);
+    --bounce: cubic-bezier(0.68, -0.6, 0.32, 1.6);
 }
 
-/* Base Styles */
-* { 
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
-    font-family: 'Plus Jakarta Sans', sans-serif; 
-    -webkit-tap-highlight-color: transparent; 
+/* --- Smooth Base Reset --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
 }
 
-body { 
-    background: var(--bg); 
-    color: var(--text-main); 
+body {
+    background-color: var(--bg-deep);
+    color: var(--text-primary);
     overflow-x: hidden;
     scroll-behavior: smooth;
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
-/* Scrollbar Styling */
-::-webkit-scrollbar {
-    width: 8px;
-}
-::-webkit-scrollbar-track {
-    background: var(--bg);
-}
-::-webkit-scrollbar-thumb {
-    background: #222;
-    border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent);
+/* --- ADVANCED UI: Glassmorphism Core --- */
+.glass-effect {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid var(--border-glass);
 }
 
-/* Preloader Specifics */
-#preloader {
-    position: fixed; 
-    top: 0; left: 0; 
-    width: 100%; height: 100vh;
-    background: #000; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    z-index: 9999;
+/* --- UX: Interactive Mouse Glow --- */
+.cursor-glow {
+    position: fixed;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: -1;
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
 }
 
-/* Animations */
-@keyframes textReveal {
-    0% { transform: translateY(20px); opacity: 0; filter: blur(10px); }
-    100% { transform: translateY(0); opacity: 1; filter: blur(0); }
-}
-
-.reveal { 
-    opacity: 0; 
-    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); 
-}
-.from-bottom { transform: translateY(50px); }
-.from-left { transform: translateX(-50px); }
-.from-right { transform: translateX(50px); }
-.reveal.active { opacity: 1; transform: translate(0, 0); }
-
-/* Navigation */
+/* --- Navigation UI --- */
 .navbar {
-    padding: 25px;
+    position: sticky;
+    top: 0;
+    padding: 1.5rem 5%;
+    z-index: 1000;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    backdrop-filter: blur(15px);
-    -webkit-backdrop-filter: blur(15px);
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: 1px solid var(--border-glass);
+    background: rgba(5, 6, 8, 0.8);
+    backdrop-filter: blur(12px);
 }
 
-/* Buttons */
+/* --- Hero UX: Depth & Focus --- */
+.hero-v2 h1 {
+    font-size: clamp(2.5rem, 8vw, 4.5rem);
+    font-weight: 800;
+    background: linear-gradient(180deg, #fff 0%, #888 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: -0.04em;
+    margin-bottom: 1rem;
+}
+
+.banner-wrapper {
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 80px rgba(0,0,0,0.8), 0 0 30px rgba(0, 122, 255, 0.1);
+    transform: perspective(1000px) rotateX(2deg);
+    transition: var(--spring);
+}
+
+.banner-wrapper:hover {
+    transform: perspective(1000px) rotateX(0deg) scale(1.01);
+}
+
+/* --- ADVANCED: Bento Grid System --- */
+.bento-card {
+    position: relative;
+    padding: 2.5rem;
+    border-radius: var(--radius-lg);
+    background: var(--bg-card);
+    border: 1px solid var(--border-glass);
+    overflow: hidden;
+    transition: var(--spring);
+}
+
+.bento-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(255,255,255,0.05), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.bento-card:hover::before { opacity: 1; }
+
+.bento-card:hover {
+    border-color: var(--accent-blue);
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+}
+
+/* --- UX: Premium Buttons --- */
 .btn-main {
-    display: inline-block;
-    padding: 18px;
-    border-radius: 18px;
+    padding: 1rem 2rem;
+    border-radius: var(--radius-md);
     font-weight: 700;
-    text-decoration: none;
-    text-align: center;
-    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: var(--bounce);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .btn-buy {
@@ -107,69 +147,55 @@ body {
 
 .btn-buy:hover {
     background: var(--gold);
-    transform: translateY(-3px);
+    transform: scale(1.05);
 }
 
 .btn-wa {
     background: rgba(37, 211, 102, 0.1);
     color: #25D366;
-    border: 1px solid rgba(37, 211, 102, 0.2);
+    border: 1px solid rgba(37, 211, 102, 0.3);
 }
 
 .btn-wa:hover {
-    background: rgba(37, 211, 102, 0.2);
-    border-color: #25D366;
+    background: #25D366;
+    color: #fff;
+    transform: scale(1.05);
 }
 
-/* Trust Strip Icons */
-.trust-item span {
-    font-size: 1.5rem;
-    margin-bottom: 8px;
-    display: block;
+/* --- ADVANCED: Technical Specs --- */
+.spec-card {
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    background: linear-gradient(145deg, rgba(20,22,25,0.8), rgba(10,11,13,0.8));
+    border: 1px solid var(--border-glass);
+    transition: var(--spring);
 }
 
-.trust-item p {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 1px;
+.spec-card h3 {
+    color: var(--gold);
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
 }
 
-/* Hover States for Cards */
-.spec-card, .bento-card {
-    transition: all 0.4s cubic-bezier(0.2, 1, 0.3, 1);
-    border: 1px solid var(--glass-border);
+.spec-card:hover {
+    background: rgba(0, 122, 255, 0.05);
+    border-color: var(--accent-blue);
 }
 
-.spec-card:hover, .bento-card:hover {
-    border-color: var(--accent);
-    box-shadow: 0 15px 40px rgba(0, 122, 255, 0.15);
-    transform: translateY(-10px);
-}
-
-/* Responsive Adjustments */
-@media (max-width: 992px) {
-    .container { padding: 0 30px; }
-    .hero-v2 h1 { font-size: 2.8rem; }
-}
-
-@media (max-width: 600px) {
-    .navbar { padding: 15px 20px; }
-    .hero-v2 { padding: 60px 0; }
-    .trust-strip { gap: 20px; padding: 20px; }
-    .specs-grid { grid-template-columns: 1fr; }
+/* --- Mobile Mastery --- */
+@media (max-width: 768px) {
+    .container { padding: 0 24px; }
+    .bento-card { padding: 1.5rem; }
+    .hero-v2 h1 { font-size: 2.5rem; }
     .actions { flex-direction: column; }
-    .btn-main { width: 100%; }
 }
 
-/* Image Handling */
-.main-banner {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+/* --- Entrance Animation --- */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.image-container img {
-    max-width: 100%;
-    max-height: 100%;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.5));
+.reveal.active {
+    animation: fadeInUp 0.8s var(--spring) forwards;
 }
